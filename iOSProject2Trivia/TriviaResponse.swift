@@ -16,4 +16,6 @@ struct Question: Identifiable, Codable {
     var question: String
     var correct_answer: String
     var incorrect_answers: [String]
+    
+    var id: String {question}
 }
