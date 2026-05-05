@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SwiftUIView: View {
+struct GameView: View {
     @State private var questions: [Question] = []
     
     var body: some View {
@@ -37,5 +37,5 @@ struct SwiftUIView: View {
 }
 
 #Preview {
-    SwiftUIView()
+    GameView()
 }
