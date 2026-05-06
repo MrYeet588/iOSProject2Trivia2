@@ -35,7 +35,7 @@ struct GameView: View {
                 } else if (q.question.contains("&amp")){
                     let qwe = q.question.replacingOccurrences(of: "&amp", with: "&")
                     Text(qwe)
-                } else if (q.question.contains("&#039")){
+                } else if (q.question.contains("&#039;")){
                     let qwe = q.question.replacingOccurrences(of: "&#039", with: "\'")
                     Text(qwe)
                 } else if (q.question.contains("&ndash")){
@@ -74,3 +74,4 @@ struct GameView: View {
 #Preview {
     GameView()
 }
+//
