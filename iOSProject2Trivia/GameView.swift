@@ -59,7 +59,7 @@ struct GameView: View {
             }
             do {
                 let (data, response) = try await URLSession.shared.data(from: urlUnwrapped)
-                let responseConverted = response as! HTTPURLResponse
+                _ = response as! HTTPURLResponse
                 let triviaResponse: TriviaResponse = try JSONDecoder().decode(TriviaResponse.self, from: data)
                 for question in triviaResponse.results {
                     questions.append(question)
