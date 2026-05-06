@@ -8,8 +8,12 @@ import SwiftUI
 
 struct GamePage: View {
     
+    var body: some View{
     
     
-    
-    
+    }
 }
+#Preview {
+    GamePage()
+}
+    
