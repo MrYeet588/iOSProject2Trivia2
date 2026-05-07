@@ -7,21 +7,22 @@
 import SwiftUI
 
 struct MainMenu: View{
-    @State private var someValue = true
-    @State private var angle = 0.0
-    @State private var applyClip = false
-    @State private var angle2 = true
+    @State var background_color_toggle = true
     var body: some View {
-        Rectangle()
-            .frame(width: 100, height: 100)
-            .foregroundColor(.blue)
-            .clipShape(RoundedRectangle(cornerRadius: applyClip ? 50 : 0))
-            .animation(.linear(duration: 1), value: applyClip)
-            .onTapGesture {
-                applyClip = !applyClip
-            }
-            .rotation3DEffect(.degrees(angle2 ? 360 : 0), axis: (0, 1, 1))
-            .animation(.linear(duration: 2), value: angle2)
+        ZStack {
+            
+            Color(background_color_toggle ? .green : .blue)
+                .ignoresSafeArea(.container, edges: .all)
+                .rotation3DEffect(.degrees(background_color_toggle ? 360 : 0), axis: (1, 1, 1))
+                .animation(.easeInOut(duration: 1).repeatForever(autoreverses: false), value: background_color_toggle)
+                .onTapGesture {
+                    background_color_toggle.toggle()
+                }
+            Text("Hello")
+            
+        }
+
+
     }
 }
 
