@@ -10,7 +10,7 @@ import Foundation
 
 extension String {
     var safeHTMLDecoded: String {
-        let entities = [
+        let entities: [String: String] = [
             "&quot;": "\"",
             "&amp;": "&",
             "&#039;": "'",
@@ -37,26 +37,6 @@ struct GameView: View {
     var body: some View {
         List {
             ForEach(questions) { q in
-                //&amp = & | &quot; = " | &#039; = ' | &ndash = - | @eacute; = é
-                if (q.question.contains("&quot;") == true) {
-                    let qwe = q.question.replacingOccurrences(of: "&quot;", with: "\"")
-                    Text(qwe)
-                } else if (q.question.contains("&amp")){
-                    let qwe = q.question.replacingOccurrences(of: "&amp", with: "&")
-                    Text(qwe)
-                } else if (q.question.contains("&#039;")){
-                    let qwe = q.question.replacingOccurrences(of: "&#039;", with: "\'")
-                    Text(qwe)
-                } else if (q.question.contains("&ndash")){
-                    let qwe = q.question.replacingOccurrences(of: "&ndash", with: "-")
-                    Text(qwe)
-                } else if (q.question.contains("&eacute;")){
-                    let qwe = q.question.replacingOccurrences(of: "&eacute;", with: "é")
-                    Text(qwe)
-                }
-                else {
-                    Text(q.question)
-                }
                 Text(q.question.safeHTMLDecoded)
             }
         }
@@ -82,4 +62,3 @@ struct GameView: View {
 #Preview {
     GameView()
 }
-//
