@@ -18,7 +18,6 @@ struct MainMenu: View{
                 .onTapGesture {
                     background_color_toggle.toggle()
                 }
-            Text("Hello")
             
         }
 
