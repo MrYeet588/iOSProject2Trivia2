@@ -21,7 +21,7 @@ struct MainMenu: View{
                 }
             
             VStack {
-                Text("Hello")
+                Text("WELCOME TO LE GAME OF TRIVIANESS")
                 Button("Start Quiz") {
                     
                 }
