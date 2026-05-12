@@ -11,6 +11,7 @@ struct MainMenu: View{
     var body: some View {
 
         NavigationStack {
+            ZStack{
                 Color(background_color_toggle ? .green : .blue)
                     .ignoresSafeArea(.container, edges: .all)
                     .rotation3DEffect(.degrees(background_color_toggle ? 360 : 0), axis: (1, 1, 1))
@@ -30,6 +31,7 @@ struct MainMenu: View{
                         
                     }
                 }
+            }
         }
     }
 }
