@@ -23,7 +23,7 @@ struct MainMenu: View{
                 VStack {
                     Text("WELCOME TO LE GAME OF TRIVIANESS")
                     NavigationLink(destination: {
-                        GameView()
+                        GamePage()
                     }, label: {
                         Label("Start Quiz", systemImage: "questionmark")
                     })
