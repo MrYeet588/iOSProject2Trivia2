@@ -39,7 +39,7 @@ struct GamePage: View {
             
             Color.yellow
                 .ignoresSafeArea()
-            
+
             ScrollView {
                 
                 VStack(spacing: 20) {
@@ -146,7 +146,11 @@ struct GamePage: View {
                 from: data
             )
             
-            questions = triviaResponse.results
+            if triviaResponse.response_code == 5 {
+                await fetchQuestions()
+            } else {
+                questions = triviaResponse.results!
+            }
             
         } catch {
             print(error)
