@@ -15,8 +15,6 @@ struct GamePage: View {
     @State private var selectedAnswer = ""
     @State private var score = 0
     @State private var gameFinished = false
-    
-    // Store answers so they don't reshuffle every time the view updates
     @State private var currentAnswers: [String] = []
     
     var currentQuestion: Question {
