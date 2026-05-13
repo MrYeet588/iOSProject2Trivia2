@@ -4,6 +4,7 @@
 //
 //  Created by Student on 5/6/26.
 //
+
 import SwiftUI
 
 struct GamePage: View {
@@ -25,6 +26,7 @@ struct GamePage: View {
                 currentQuestion.incorrect_answers[0]
             ].shuffled()
         }
+        
         return (
             currentQuestion.incorrect_answers +
             [currentQuestion.correct_answer]
@@ -33,62 +35,73 @@ struct GamePage: View {
     
     var body: some View {
         
-        Color.yellow
-            .ignoresSafeArea()
-        
-        VStack(spacing: 20) {
+        ZStack {
             
-            if questions.isEmpty {
-                ProgressView("Loading Questions...")
-            } else {
+            Color.yellow
+                .ignoresSafeArea()
+            
+            ScrollView {
                 
-                Text("Question \(currentQuestionIndex + 1)/\(questions.count)")
-                    .font(.headline)
-                
-                Text(currentQuestion.question.safeHTMLDecoded)
-                    .font(.title3)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                
-                ForEach(answers, id: \.self) { answer in
+                VStack(spacing: 20) {
                     
-                    Button {
+                    if questions.isEmpty {
                         
-                        selectedAnswer = answer
-                        answerSelected = true
+                        ProgressView("Loading Questions...")
                         
-                        if answer == currentQuestion.correct_answer {
-                            score += 1
+                    } else {
+                        
+                        Text("Question \(currentQuestionIndex + 1)/\(questions.count)")
+                            .font(.headline)
+                        
+                        Text(currentQuestion.question.safeHTMLDecoded)
+                            .font(.title3)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            .fixedSize(horizontal: false, vertical: true)
+                        
+                        ForEach(answers, id: \.self) { answer in
+                            
+                            Button {
+                                
+                                selectedAnswer = answer
+                                answerSelected = true
+                                
+                                if answer == currentQuestion.correct_answer {
+                                    score += 1
+                                }
+                                
+                            } label: {
+                                
+                                Text(answer.safeHTMLDecoded)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(buttonColor(answer))
+                                    .foregroundColor(.white)
+                                    .cornerRadius(12)
+                            }
+                            .disabled(answerSelected)
                         }
                         
-                    } label: {
-                        
-                        Text(answer.safeHTMLDecoded)
-                            .frame(maxWidth: .infinity)
+                        if answerSelected {
+                            
+                            Button("Next Question") {
+                                nextQuestion()
+                            }
                             .padding()
-                            .background(buttonColor(answer))
-                            .foregroundColor(.white)
-                            .cornerRadius(12)
+                        }
+                        
+                        Text("Score: \(score)")
+                            .font(.title2)
                     }
-                    .disabled(answerSelected)
                 }
-                if answerSelected {
-                    
-                    Button("Next Question") {
-                        nextQuestion()
-                    }
-                    .padding()
-                }
-                
-                Text("Score: \(score)")
-                    .font(.title2)
+                .padding()
             }
         }
-        .padding()
         .task {
             await fetchQuestions()
         }
     }
+    
     func buttonColor(_ answer: String) -> Color {
         
         if !answerSelected {
@@ -125,6 +138,7 @@ struct GamePage: View {
         }
         
         do {
+            
             let (data, _) = try await URLSession.shared.data(from: url)
             
             let triviaResponse = try JSONDecoder().decode(
