@@ -38,7 +38,6 @@ struct GamePage: View {
                         
                     } else if gameFinished {
                         
-                        // Final score screen
                         Text("Game Over!")
                             .font(.largeTitle)
                             .bold()
@@ -58,7 +57,6 @@ struct GamePage: View {
                             .padding()
                             .fixedSize(horizontal: false, vertical: true)
                         
-                        // Use currentAnswers instead of computed shuffled answers
                         ForEach(currentAnswers, id: \.self) { answer in
                             
                             Button {
