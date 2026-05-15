@@ -10,7 +10,7 @@ struct MainMenu: View {
     @State private var background_color_toggle = false
     @State private var screenTapped = false
     @State private var scale: CGFloat = 0
-    @State private var duration = 0.5
+    @State private var duration = 1.5
     
     var body: some View {
         NavigationStack {
@@ -18,18 +18,11 @@ struct MainMenu: View {
                 Color(background_color_toggle ? .green : .blue)
                     .ignoresSafeArea()
                 
-                if screenTapped {
                     Circle()
                         .fill(Color(background_color_toggle ? .blue : .green))
                         .scaleEffect(scale)
                         .frame(width: UIScreen.main.bounds.width * 2,
                                height: UIScreen.main.bounds.height * 2)
-                        .onAppear {
-                            withAnimation(.linear(duration: 1.5)) {
-                                scale = 2
-                            }
-                        }
-                }
                 
                 VStack(spacing: 20) {
                     Text("WELCOME TO LE GAME OF TRIVIANESS")
@@ -56,15 +49,10 @@ struct MainMenu: View {
                 .foregroundColor(.white)
             }
             .onTapGesture {
-                withAnimation(.easeIn(duration: duration)){
-                    
-                    screenTapped = true
-                    scale = 0
-                }
-                withAnimation(.easeIn(duration: duration).delay(duration)){
-                    
+                withAnimation(.easeInOut(duration: duration)) {
+                    scale = 2
+                } completion: {
                     background_color_toggle.toggle()
-                    screenTapped = false
                     scale = 0
                 }
             }
