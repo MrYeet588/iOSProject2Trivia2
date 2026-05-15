@@ -6,7 +6,9 @@
 
 
 struct TriviaResponse: Codable {
-    let results: [Question]
+    let response_code: Int
+    let result: [Question]?
+    let results: [Question]?
 }
 
 struct Question: Identifiable, Codable {

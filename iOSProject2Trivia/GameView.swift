@@ -41,7 +41,7 @@ struct GameView: View {
             }
         }
         .task {
-            let urlStr: String = "https://opentdb.com/api.php?amount=4"
+            let urlStr: String = "https://opentdb.com/api.php?amount=1"
             let url: URL? = URL(string: urlStr)
             guard let urlUnwrapped = url else {
                 return
@@ -49,7 +49,7 @@ struct GameView: View {
             do {
                 let (data, _) = try await URLSession.shared.data(from: urlUnwrapped)
                 let triviaResponse: TriviaResponse = try JSONDecoder().decode(TriviaResponse.self, from: data)
-                for question in triviaResponse.results {
+                for question in triviaResponse.results! {
                     questions.append(question)
                 }
             } catch let error {

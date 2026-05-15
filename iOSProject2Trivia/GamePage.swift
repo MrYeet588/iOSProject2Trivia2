@@ -14,23 +14,11 @@ struct GamePage: View {
     @State private var answerSelected = false
     @State private var selectedAnswer = ""
     @State private var score = 0
+    @State private var gameFinished = false
+    @State private var currentAnswers: [String] = []
     
     var currentQuestion: Question {
         questions[currentQuestionIndex]
-    }
-    
-    var answers: [String] {
-        if currentQuestion.type == "boolean" {
-            return [
-                currentQuestion.correct_answer,
-                currentQuestion.incorrect_answers[0]
-            ].shuffled()
-        }
-        
-        return (
-            currentQuestion.incorrect_answers +
-            [currentQuestion.correct_answer]
-        ).shuffled()
     }
     
     var body: some View {
@@ -39,7 +27,7 @@ struct GamePage: View {
             
             Color.yellow
                 .ignoresSafeArea()
-            
+
             ScrollView {
                 
                 VStack(spacing: 20) {
@@ -47,6 +35,16 @@ struct GamePage: View {
                     if questions.isEmpty {
                         
                         ProgressView("Loading Questions...")
+                        
+                    } else if gameFinished {
+                        
+                        Text("Game Over!")
+                            .font(.largeTitle)
+                            .bold()
+                        
+                        Text("You got \(score) out of \(questions.count) correct!")
+                            .font(.title2)
+                            .padding()
                         
                     } else {
                         
@@ -59,7 +57,7 @@ struct GamePage: View {
                             .padding()
                             .fixedSize(horizontal: false, vertical: true)
                         
-                        ForEach(answers, id: \.self) { answer in
+                        ForEach(currentAnswers, id: \.self) { answer in
                             
                             Button {
                                 
@@ -84,7 +82,11 @@ struct GamePage: View {
                         
                         if answerSelected {
                             
-                            Button("Next Question") {
+                            Button(
+                                currentQuestionIndex == questions.count - 1
+                                ? "Finish Quiz"
+                                : "Next Question"
+                            ) {
                                 nextQuestion()
                             }
                             .padding()
@@ -125,7 +127,33 @@ struct GamePage: View {
         selectedAnswer = ""
         
         if currentQuestionIndex < questions.count - 1 {
+            
             currentQuestionIndex += 1
+            setupAnswers()
+            
+        } else {
+            
+            gameFinished = true
+        }
+    }
+    
+    func setupAnswers() {
+        
+        guard !questions.isEmpty else { return }
+        
+        if currentQuestion.type == "boolean" {
+            
+            currentAnswers = [
+                currentQuestion.correct_answer,
+                currentQuestion.incorrect_answers[0]
+            ].shuffled()
+            
+        } else {
+            
+            currentAnswers = (
+                currentQuestion.incorrect_answers +
+                [currentQuestion.correct_answer]
+            ).shuffled()
         }
     }
     
@@ -146,7 +174,13 @@ struct GamePage: View {
                 from: data
             )
             
-            questions = triviaResponse.results
+            if triviaResponse.response_code == 5 {
+                await fetchQuestions()
+            } else {
+                questions = triviaResponse.results!
+            }
+            
+            setupAnswers()
             
         } catch {
             print(error)
