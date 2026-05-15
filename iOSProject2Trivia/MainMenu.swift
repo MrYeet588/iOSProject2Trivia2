@@ -13,6 +13,7 @@ struct MainMenu: View {
     @State private var duration = 1.5
     @State private var diffButt = "Select Difficulty"
     @State private var diffButtPress = false
+    @State private(set) var APIdiff = ""
     
     var body: some View {
         NavigationStack {
@@ -52,6 +53,7 @@ struct MainMenu: View {
                             Button("Easy") {
                                 diffButtPress = false
                                 diffButt = "Easy"
+                                APIdiff = "&difficulty=easy"
                             }
                             .font(.caption2)
                             .padding(10)
@@ -60,6 +62,7 @@ struct MainMenu: View {
                             Button("Medium") {
                                 diffButtPress = false
                                 diffButt = "Medium"
+                                APIdiff = "&difficulty=medium"
                             }
                             .font(.caption2)
                             .padding(10)
@@ -68,6 +71,7 @@ struct MainMenu: View {
                             Button("Hard") {
                                 diffButtPress = false
                                 diffButt = "Hard"
+                                APIdiff = "&difficulty=hard"
                             }
                             .font(.caption2)
                             .padding(10)
@@ -76,6 +80,7 @@ struct MainMenu: View {
                             Button("Default") {
                                 diffButtPress = false
                                 diffButt = "Default"
+                                APIdiff = ""
                             }
                             .font(.caption2)
                             .padding(10)
