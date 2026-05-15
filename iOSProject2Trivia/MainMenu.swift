@@ -11,6 +11,8 @@ struct MainMenu: View {
     @State private var screenTapped = false
     @State private var scale: CGFloat = 0
     @State private var duration = 1.5
+    @State private var diffButt = "Select Difficulty"
+    @State private var diffButtPress = false
     
     var body: some View {
         NavigationStack {
@@ -38,13 +40,49 @@ struct MainMenu: View {
                             .cornerRadius(10)
                     }
                     
-                    Button("Select Difficulty") {
-                        
+                    Button(diffButt) {
+                        diffButtPress = true
                     }
                     .font(.title3)
                     .padding()
                     .background(Color.white.opacity(0.3))
                     .cornerRadius(10)
+                    if (diffButtPress){
+                        HStack{
+                            Button("Easy") {
+                                diffButtPress = false
+                                diffButt = "Easy"
+                            }
+                            .font(.caption2)
+                            .padding(10)
+                            .background(Color.white.opacity(0.3))
+                            .cornerRadius(10)
+                            Button("Medium") {
+                                diffButtPress = false
+                                diffButt = "Medium"
+                            }
+                            .font(.caption2)
+                            .padding(10)
+                            .background(Color.white.opacity(0.3))
+                            .cornerRadius(10)
+                            Button("Hard") {
+                                diffButtPress = false
+                                diffButt = "Hard"
+                            }
+                            .font(.caption2)
+                            .padding(10)
+                            .background(Color.white.opacity(0.3))
+                            .cornerRadius(10)
+                            Button("Default") {
+                                diffButtPress = false
+                                diffButt = "Default"
+                            }
+                            .font(.caption2)
+                            .padding(10)
+                            .background(Color.white.opacity(0.3))
+                            .cornerRadius(10)
+                        }
+                    }
                 }
                 .foregroundColor(.white)
             }
