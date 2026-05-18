@@ -21,7 +21,9 @@ extension String {
             "&ndash;": "–",
             "&mdash;": "—",
             "&eacute;": "é",
-            "&pi;": "π"
+            "&pi;": "π",
+            "&tilde;": "~",
+            "&deg;": "°"
         ]
         var decoded = self
         for (entity, replacement) in entities {
