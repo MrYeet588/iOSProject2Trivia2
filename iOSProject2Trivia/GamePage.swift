@@ -9,6 +9,8 @@ import SwiftUI
 
 struct GamePage: View {
     
+    let apiDifficulty: String
+    
     @State private var questions: [Question] = []
     @State private var currentQuestionIndex = 0
     @State private var answerSelected = false
@@ -27,7 +29,7 @@ struct GamePage: View {
             
             Color.yellow
                 .ignoresSafeArea()
-
+            
             ScrollView {
                 
                 VStack(spacing: 20) {
@@ -159,7 +161,8 @@ struct GamePage: View {
     
     func fetchQuestions() async {
         
-        let urlString = "https://opentdb.com/api.php?amount=10"
+        let urlString =
+        "https://opentdb.com/api.php?amount=10\(apiDifficulty)"
         
         guard let url = URL(string: urlString) else {
             return
@@ -189,5 +192,5 @@ struct GamePage: View {
 }
 
 #Preview {
-    GamePage()
+    GamePage(apiDifficulty: "")
 }

@@ -4,36 +4,51 @@
 //
 //  Created by Student on 5/5/26.
 //
+
 import SwiftUI
 
 struct MainMenu: View {
+    
     @State private var background_color_toggle = false
     @State private var screenTapped = false
     @State private var scale: CGFloat = 0
     @State private var duration = 1.5
+    
     @State private var diffButt = "Select Difficulty"
     @State private var diffButtPress = false
+    
     @State private(set) var APIdiff = ""
     
     var body: some View {
+        
         NavigationStack {
+            
             ZStack {
+                
                 Color(background_color_toggle ? .green : .blue)
                     .ignoresSafeArea()
                 
-                    Circle()
-                        .fill(Color(background_color_toggle ? .blue : .green))
-                        .scaleEffect(scale)
-                        .frame(width: UIScreen.main.bounds.width * 2,
-                               height: UIScreen.main.bounds.height * 2)
+                Circle()
+                    .fill(Color(background_color_toggle ? .blue : .green))
+                    .scaleEffect(scale)
+                    .frame(
+                        width: UIScreen.main.bounds.width * 2,
+                        height: UIScreen.main.bounds.height * 2
+                    )
+                    .onAppear {
+                        withAnimation(.linear(duration: 1.5)) {
+                            scale = 2
+                        }
+                    }
                 
                 VStack(spacing: 20) {
+                    
                     Text("WELCOME TO LE GAME OF TRIVIANESS")
                         .font(.title2)
                         .multilineTextAlignment(.center)
                         .padding()
                     
-                    NavigationLink(destination: GamePage()) {
+                    NavigationLink(destination: GamePage(apiDifficulty: APIdiff)) {
                         Text("Start Quiz")
                             .font(.title3)
                             .padding()
@@ -48,8 +63,11 @@ struct MainMenu: View {
                     .padding()
                     .background(Color.white.opacity(0.3))
                     .cornerRadius(10)
-                    if (diffButtPress){
-                        HStack{
+                    
+                    if diffButtPress {
+                        
+                        HStack {
+                            
                             Button("Easy") {
                                 diffButtPress = false
                                 diffButt = "Easy"
@@ -59,6 +77,7 @@ struct MainMenu: View {
                             .padding(10)
                             .background(Color.white.opacity(0.3))
                             .cornerRadius(10)
+                            
                             Button("Medium") {
                                 diffButtPress = false
                                 diffButt = "Medium"
@@ -68,6 +87,7 @@ struct MainMenu: View {
                             .padding(10)
                             .background(Color.white.opacity(0.3))
                             .cornerRadius(10)
+                            
                             Button("Hard") {
                                 diffButtPress = false
                                 diffButt = "Hard"
@@ -77,6 +97,7 @@ struct MainMenu: View {
                             .padding(10)
                             .background(Color.white.opacity(0.3))
                             .cornerRadius(10)
+                            
                             Button("Default") {
                                 diffButtPress = false
                                 diffButt = "Default"
@@ -92,6 +113,7 @@ struct MainMenu: View {
                 .foregroundColor(.white)
             }
             .onTapGesture {
+                
                 withAnimation(.easeInOut(duration: duration)) {
                     scale = 2
                 } completion: {
@@ -102,9 +124,7 @@ struct MainMenu: View {
         }
     }
 }
+
 #Preview {
     MainMenu()
 }
-
-
-

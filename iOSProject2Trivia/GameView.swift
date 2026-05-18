@@ -32,6 +32,7 @@ extension String {
 }
 
 struct GameView: View {
+    let apiDifficulty: String
     @State private var questions: [Question] = []
     
     var body: some View {
@@ -41,7 +42,7 @@ struct GameView: View {
             }
         }
         .task {
-            let urlStr: String = "https://opentdb.com/api.php?amount=1"
+            let urlStr: String = "https://opentdb.com/api.php?amount=1\(apiDifficulty)"
             let url: URL? = URL(string: urlStr)
             guard let urlUnwrapped = url else {
                 return
@@ -60,5 +61,5 @@ struct GameView: View {
 }
 
 #Preview {
-    GameView()
+    GameView(apiDifficulty: "")
 }
