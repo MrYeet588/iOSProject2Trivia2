@@ -18,6 +18,7 @@ struct GamePage: View {
     @State private var score = 0
     @State private var gameFinished = false
     @State private var currentAnswers: [String] = []
+    @State private var rotation = 60.0
     
     var currentQuestion: Question {
         questions[currentQuestionIndex]
@@ -26,9 +27,13 @@ struct GamePage: View {
     var body: some View {
         
         ZStack {
-            
-            Color.yellow
-                .ignoresSafeArea()
+            if !gameFinished {
+                Color.yellow
+                    .ignoresSafeArea()
+            } else {
+                Color(score < 5 ? .red : .green)
+                    .ignoresSafeArea()
+            }
             
             ScrollView {
                 
@@ -39,15 +44,22 @@ struct GamePage: View {
                         ProgressView("Loading Questions...")
                         
                     } else if gameFinished {
-                        
-                        Text("Game Over!")
-                            .font(.largeTitle)
-                            .bold()
-                        
-                        Text("You got \(score) out of \(questions.count) correct!")
-                            .font(.title2)
-                            .padding()
-                        
+                        HStack {
+                            Text("Game Over!")
+                                .font(.largeTitle)
+                                .bold()
+                            
+                            Text("You got \(score) out of \(questions.count) correct!")
+                                .font(.title2)
+                                .padding()
+                        }
+                        .rotationEffect(.degrees(rotation))
+                        .animation(.easeInOut(duration: 1000), value: rotation)
+                        .onAppear(){
+                            if(gameFinished){
+                                rotation += 45
+                            }
+                        }
                     } else {
                         
                         Text("Question \(currentQuestionIndex + 1)/\(questions.count)")
